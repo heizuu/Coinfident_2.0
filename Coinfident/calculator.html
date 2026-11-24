@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn the 50/30/20 rule, check your allowance with a free student budget calculator, and find budgeting articles.">
+    <meta name="theme-color" content="#234c3c">
     <title>Coinfident - Main</title>
     <link rel="stylesheet" type="text/css" href="css-stylesheets/tester.css">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 </head>
 <body>
+    <a class="skip-link" href="#calc-main">Skip to main content</a>
     <header id="main-header">
         <div class="container">
             <a href="1main.html" class="brand">
@@ -30,6 +34,13 @@
             Learn a simple way to plan your monthly allowance, then check your own budget and find articles that match your result.
         </p>
 
+        <nav class="page-jump" aria-label="On this page">
+            <a href="#rule">The rule</a>
+            <a href="#calculator">Calculator</a>
+            <a href="#ratings">How it is rated</a>
+            <a href="#resources">Resources</a>
+        </nav>
+
         <section id="rule" class="calc-section split">
             <img src="images/budget-rule.svg" alt="Donut chart of the 50/30/20 rule: 50% needs, 30% wants, 20% savings">
             <div>
@@ -44,18 +55,23 @@
         </section>
 
         <h2 id="calculator" class="calc-title">Check your budget</h2>
-        <p class="calc-intro">Enter your monthly allowance and where it goes, then press Check my budget.</p>
+        <p class="calc-intro">Enter your allowance and where it goes, then press Check my budget. Not sure where to start? <button type="button" id="example-btn" class="link-button">Try an example</button></p>
 
         <form id="calc-form" novalidate>
             <div class="calc-grid">
                 <fieldset class="calc-card allowance">
-                    <legend class="calc-head">Monthly allowance</legend>
+                    <legend class="calc-head">Your allowance</legend>
                     <div class="calc-allow-body">
                         <div class="calc-allow-input">
-                            <p class="hint">Include everything you receive in a month: allowance from family, scholarship, stipend, or part-time pay.</p>
-                            <label class="calc-field"><span>Total monthly allowance</span>
+                            <p class="hint">Include everything you receive: allowance from family, scholarship, stipend, or part-time pay.</p>
+                            <div class="calc-period" role="radiogroup" aria-label="How often you receive your allowance">
+                                <label><input type="radio" name="period" value="monthly" checked><span>Monthly</span></label>
+                                <label><input type="radio" name="period" value="weekly"><span>Weekly</span></label>
+                            </div>
+                            <label class="calc-field"><span id="allow-label">Total monthly allowance</span>
                                 <div class="calc-money"><input type="number" id="allowance" min="0" step="any" inputmode="decimal" placeholder="0"></div>
                             </label>
+                            <p id="allow-note" class="calc-note"></p>
                         </div>
                         <div class="calc-side">
                             <div class="calc-actions">
@@ -88,34 +104,46 @@
                         <span class="b-save w20">Savings 20%</span>
                     </div>
                 </div>
+
+                <div class="calc-advice">
+                    <h3>What to adjust</h3>
+                    <ul id="advice-list"></ul>
+                    <button type="button" id="print-btn" class="calc-print">Print my result</button>
+                </div>
                 </div>
 
-                <fieldset class="calc-card needs">
-                    <legend class="calc-head"><span>Needs</span><span class="calc-sub" id="sub-needs"></span></legend>
-                    <p class="hint">Things you can't skip.</p>
-                    <label class="calc-field"><span>Boarding, rent, utilities</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Groceries and basic meals</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Transportation</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Tuition, school supplies, printing</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Load and internet</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Other required costs</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                <fieldset class="calc-card needs" aria-label="Needs">
+                    <details class="calc-fold" open>
+                        <summary class="calc-head"><span>Needs</span><span class="calc-sub" id="sub-needs"></span></summary>
+                        <p class="hint">Things you can't skip.</p>
+                        <label class="calc-field"><span>Boarding, rent, utilities</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Groceries and basic meals</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Transportation</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Tuition, school supplies, printing</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Load and internet</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Other required costs</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    </details>
                 </fieldset>
 
-                <fieldset class="calc-card wants">
-                    <legend class="calc-head"><span>Wants</span><span class="calc-sub" id="sub-wants"></span></legend>
-                    <p class="hint">Things that are nice to have.</p>
-                    <label class="calc-field"><span>Eating out, milk tea, coffee</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Entertainment and hangouts</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Subscriptions and games</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Shopping (clothes, gadgets, online orders)</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Other wants</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                <fieldset class="calc-card wants" aria-label="Wants">
+                    <details class="calc-fold" open>
+                        <summary class="calc-head"><span>Wants</span><span class="calc-sub" id="sub-wants"></span></summary>
+                        <p class="hint">Things that are nice to have.</p>
+                        <label class="calc-field"><span>Eating out, milk tea, coffee</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Entertainment and hangouts</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Subscriptions and games</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Shopping (clothes, gadgets, online orders)</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Other wants</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    </details>
                 </fieldset>
 
-                <fieldset class="calc-card savings">
-                    <legend class="calc-head"><span>Savings</span><span class="calc-sub" id="sub-savings"></span></legend>
-                    <p class="hint">Money you set aside each month.</p>
-                    <label class="calc-field"><span>Savings and emergency fund</span><div class="calc-money"><input type="number" class="save" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
-                    <label class="calc-field"><span>Goals (laptop, thesis, trip)</span><div class="calc-money"><input type="number" class="save" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                <fieldset class="calc-card savings" aria-label="Savings">
+                    <details class="calc-fold" open>
+                        <summary class="calc-head"><span>Savings</span><span class="calc-sub" id="sub-savings"></span></summary>
+                        <p class="hint">Money you set aside each month.</p>
+                        <label class="calc-field"><span>Savings and emergency fund</span><div class="calc-money"><input type="number" class="save" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                        <label class="calc-field"><span>Goals (laptop, thesis, trip)</span><div class="calc-money"><input type="number" class="save" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    </details>
                 </fieldset>
             </div>
 
@@ -187,13 +215,16 @@
         };
 
         var RES_TITLE = { poor: 'Get back on track', medium: 'Keep improving', good: 'Sustain and grow' };
-
         var LABEL = { good: 'Good', medium: 'Medium', poor: 'Poor' };
         var VERDICT_TEXT = {
             good: 'Your budget is in line with the 50/30/20 rule. Keep it up.',
             medium: 'You are close, but at least one category is off target. Small changes can bring it in line.',
             poor: 'At least one category is well off target. Start with the biggest gap below.'
         };
+        var WEEKS_PER_MONTH = 52 / 12;   /* turns a weekly allowance into a monthly amount */
+
+        var form = document.getElementById('calc-form');
+        var allowanceInput = document.getElementById('allowance');
 
         function sumOf(sel) {
             var t = 0;
@@ -204,16 +235,39 @@
             return t;
         }
         function peso(n) {
-            return '\u20B1' + n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return '₱' + n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
         function rate(rule, pct) {
             if (rule.higherIsBetter) return pct >= rule.good ? 'good' : pct >= rule.medium ? 'medium' : 'poor';
             return pct <= rule.good ? 'good' : pct <= rule.medium ? 'medium' : 'poor';
         }
+        function period() { return form.elements.period.value; }   /* 'monthly' or 'weekly' */
+        function monthlyAllowance() {
+            var v = parseFloat(allowanceInput.value);
+            if (isNaN(v) || v < 0) v = 0;
+            return period() === 'weekly' ? v * WEEKS_PER_MONTH : v;
+        }
+        /* The biggest amount in a group of fields, with the name of that field */
+        function biggest(sel) {
+            var best = { amount: 0, label: '' };
+            document.querySelectorAll(sel).forEach(function (el) {
+                var v = parseFloat(el.value);
+                if (!isNaN(v) && v > best.amount) {
+                    best = { amount: v, label: el.closest('label').querySelector('span').textContent };
+                }
+            });
+            return best;
+        }
 
-        /* Live subtotals and balance */
+        /* Live subtotals, balance, and the weekly note */
         function updateLive() {
-            var a = parseFloat(document.getElementById('allowance').value) || 0;
+            var weekly = period() === 'weekly';
+            document.getElementById('allow-label').textContent = weekly ? 'Total weekly allowance' : 'Total monthly allowance';
+            var a = monthlyAllowance();
+            var note = '';
+            if (weekly) note = a > 0 ? 'That is about ' + peso(a) + ' per month. Enter your expenses for a full month below.' : 'Enter your expenses for a full month below.';
+            document.getElementById('allow-note').textContent = note;
+
             var n = sumOf('.need'), w = sumOf('.want'), s = sumOf('.save');
             document.getElementById('sub-needs').textContent = n ? peso(n) : '';
             document.getElementById('sub-wants').textContent = w ? peso(w) : '';
@@ -224,9 +278,44 @@
             leftEl.textContent = peso(left);
             leftEl.className = left < 0 ? 'over' : '';
         }
-        document.getElementById('calc-form').addEventListener('input', updateLive);
+        form.addEventListener('input', updateLive);
+        form.addEventListener('change', updateLive);
 
-        document.getElementById('calc-form').addEventListener('submit', function (e) {
+        /* Specific advice for each category that is above (or below) its target */
+        function buildAdvice(amounts, allowance, spent) {
+            var items = [], weekly = period() === 'weekly', free = allowance - spent, EPS = 0.005;
+            var needsLimit = allowance * RULES.needs.good / 100;
+            var wantsLimit = allowance * RULES.wants.good / 100;
+            var savingsGoal = allowance * RULES.savings.good / 100;
+
+            if (free < -EPS) {
+                items.push('Bring your total down by ' + peso(-free) + ': trim wants first, then look at needs.');
+            }
+            if (amounts.needs > needsLimit + EPS) {
+                var bn = biggest('.need');
+                items.push('Needs are ' + peso(amounts.needs - needsLimit) + ' over the 50% target (' + peso(needsLimit) + ').' +
+                    (bn.label ? ' Your biggest need is "' + bn.label + '" (' + peso(bn.amount) + '), so start there.' : ''));
+            }
+            if (amounts.wants > wantsLimit + EPS) {
+                var bw = biggest('.want');
+                items.push('Wants are ' + peso(amounts.wants - wantsLimit) + ' over the 30% target (' + peso(wantsLimit) + ').' +
+                    (bw.label ? ' Cutting back on "' + bw.label + '" (' + peso(bw.amount) + ') is the easiest place to begin.' : ''));
+            }
+            var shortBy = savingsGoal - amounts.savings;
+            if (shortBy > EPS) {
+                var msg = 'Savings are ' + peso(shortBy) + ' short of the 20% target. Try setting aside ' + peso(savingsGoal) + ' a month' +
+                    (weekly ? ' (about ' + peso(savingsGoal / WEEKS_PER_MONTH) + ' a week)' : '') + ' as soon as your allowance arrives.';
+                if (free > EPS) {
+                    msg += free >= shortBy ? ' Your unassigned ' + peso(free) + ' is enough to reach it.'
+                                           : ' Putting your unassigned ' + peso(free) + ' into savings gets you closer.';
+                }
+                items.push(msg);
+            }
+            if (!items.length) items.push('Needs, wants, and savings are all on target. Check again whenever your allowance changes.');
+            return items;
+        }
+
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
             var errorEl = document.getElementById('calc-error');
             var results = document.getElementById('calc-results');
@@ -234,13 +323,14 @@
             function setShown(show) { results.hidden = !show; summary.hidden = !show; }
             errorEl.textContent = '';
 
-            var allowance = parseFloat(document.getElementById('allowance').value);
-            if (isNaN(allowance) || allowance <= 0) {
-                errorEl.textContent = 'Enter your monthly allowance to continue.';
+            var entered = parseFloat(allowanceInput.value);
+            if (isNaN(entered) || entered <= 0) {
+                errorEl.textContent = 'Enter your allowance to continue.';
                 setShown(false);
-                document.getElementById('allowance').focus();
+                allowanceInput.focus();
                 return;
             }
+            var allowance = monthlyAllowance();
             var amounts = { needs: sumOf('.need'), wants: sumOf('.want'), savings: sumOf('.save') };
             var spent = amounts.needs + amounts.wants + amounts.savings;
             if (spent === 0) {
@@ -268,13 +358,13 @@
                 var w = amounts[key] / base * 100;
                 if (w > 0) bar += '<span class="' + cls[key] + '" style="width:' + w + '%">' + (w >= 9 ? (amounts[key] / allowance * 100).toFixed(0) + '%' : '') + '</span>';
             });
-            var diff = allowance - spent, note = '';
-            if (diff > 0) {
+            var diff = allowance - spent, verdictText = VERDICT_TEXT[overall];
+            if (diff > 0.005) {
                 bar += '<span class="b-left" style="width:' + (diff / base * 100) + '%">' + (diff / base * 100 >= 9 ? 'Unassigned' : '') + '</span>';
-                note = ' ' + peso(diff) + ' of your allowance is not assigned to any category yet.';
-            } else if (diff < 0) {
+                verdictText += ' ' + peso(diff) + ' of your allowance is not assigned to any category yet.';
+            } else if (diff < -0.005) {
                 overall = 'poor';
-                note = ' You planned to spend ' + peso(-diff) + ' more than your allowance.';
+                verdictText = 'You planned to spend ' + peso(-diff) + ' more than your allowance.';
             }
 
             document.getElementById('bar-yours').innerHTML = bar;
@@ -282,7 +372,15 @@
             document.getElementById('calc-verdict').className = 'calc-verdict ' + overall;
             document.getElementById('verdict-badge').textContent = LABEL[overall];
             document.getElementById('verdict-title').textContent = 'Overall rating: ' + LABEL[overall];
-            document.getElementById('verdict-text').textContent = VERDICT_TEXT[overall] + note;
+            document.getElementById('verdict-text').textContent = verdictText;
+
+            var adviceList = document.getElementById('advice-list');
+            adviceList.innerHTML = '';
+            buildAdvice(amounts, allowance, spent).forEach(function (text) {
+                var li = document.createElement('li');
+                li.textContent = text;
+                adviceList.appendChild(li);
+            });
 
             var list = document.getElementById('res-list');
             document.getElementById('res-title').textContent = RES_TITLE[overall];
@@ -298,12 +396,52 @@
             summary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
 
+        /* Clear button */
         document.getElementById('calc-reset').addEventListener('click', function () {
             document.getElementById('calc-results').hidden = true;
             document.getElementById('calc-summary').hidden = true;
             document.getElementById('calc-error').textContent = '';
-            setTimeout(updateLive, 0);
+            setTimeout(updateLive, 0);   /* wait until the form has cleared its fields */
         });
+
+        /* Try an example: fills a sample student budget and checks it */
+        document.getElementById('example-btn').addEventListener('click', function () {
+            form.reset();
+            form.elements.period.value = 'monthly';
+            allowanceInput.value = 10000;
+            var sample = { need: [2800, 1500, 500, 400, 300, 0], want: [1400, 800, 300, 800, 0], save: [1200, 0] };
+            Object.keys(sample).forEach(function (cls) {
+                document.querySelectorAll('.' + cls).forEach(function (el, i) { el.value = sample[cls][i] || ''; });
+            });
+            updateLive();
+            if (form.requestSubmit) form.requestSubmit();
+            else form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+        });
+
+        /* Print my result */
+        document.getElementById('print-btn').addEventListener('click', function () { window.print(); });
+
+        /* On phones, the category cards fold up so the page is shorter. On larger screens they stay open. */
+        var folds = document.querySelectorAll('.calc-fold');
+        var phone = window.matchMedia('(max-width: 800px)');
+        function setFolds() {
+            folds.forEach(function (d, i) { d.open = phone.matches ? i === 0 : true; });
+        }
+        setFolds();
+        if (phone.addEventListener) phone.addEventListener('change', setFolds);
+        folds.forEach(function (d) {
+            d.querySelector('summary').addEventListener('click', function (e) { if (!phone.matches) e.preventDefault(); });
+        });
+        var foldMemory = [];
+        window.addEventListener('beforeprint', function () {
+            foldMemory = [];
+            folds.forEach(function (d) { foldMemory.push(d.open); d.open = true; });
+        });
+        window.addEventListener('afterprint', function () {
+            if (foldMemory.length) folds.forEach(function (d, i) { d.open = foldMemory[i]; });
+        });
+
+        updateLive();
     </script>
 </body>
 </html>
