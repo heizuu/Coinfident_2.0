@@ -478,3 +478,37 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.2px; line-height: 1.25; }
 #navbar a, .page-jump a { font-weight: 600; }
 strong, b, button, label, th { font-weight: 700; }
 .calc-money input, .calc-balance strong, .calc-table td, .calc-sub, .calc-head span { font-variant-numeric: tabular-nums; }
+
+/* ---------- Phone layout fixes ---------- */
+@media (max-width: 800px) {
+    /* Section pills: start from the left edge so the first pill is never cut off, and hide the scrollbar */
+    #sticky-top .page-jump { justify-content: flex-start; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    #sticky-top .page-jump::-webkit-scrollbar { display: none; }
+    #sticky-top .page-jump a { flex: none; }
+}
+
+@media (max-width: 600px) {
+    /* Results table becomes one card per category so nothing runs off the screen */
+    .calc-table-wrap { overflow: visible; }
+    .calc-table { min-width: 0; }
+    .calc-table thead { position: absolute; left: -9999px; }
+    .calc-table, .calc-table tbody, .calc-table tr { display: block; }
+    .calc-table tr { background: #fff; border: 1px solid var(--c-line); border-radius: 10px; margin: 0 0 12px; padding: 8px 14px; }
+    .calc-table td { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 7px 0; border: 0; border-bottom: 1px solid #ecece0; text-align: right; }
+    .calc-table td:last-child { border-bottom: 0; }
+    .calc-table td:first-child { font-size: 1.1rem; font-weight: 700; padding-bottom: 8px; }
+    .calc-table td:not(:first-child)::before { font-size: 0.85rem; color: var(--c-muted); font-weight: 600; text-align: left; }
+    .calc-table td:nth-child(2)::before { content: "Your amount"; }
+    .calc-table td:nth-child(3)::before { content: "Share of allowance"; }
+    .calc-table td:nth-child(4)::before { content: "Target"; }
+    .calc-table td:nth-child(5)::before { content: "Rating"; }
+}
+
+@media (max-width: 420px) {
+    /* Team: compact side-by-side cards instead of four tall ones */
+    .team-card { grid-template-columns: 76px minmax(0, 1fr); justify-items: stretch; text-align: left; column-gap: 14px; row-gap: 2px; padding: 12px; }
+    .team-photo { width: 76px; grid-row: 1 / span 2; border-width: 2px; }
+    .team-initial { font-size: 2.2rem; }
+    .page-section .team-card h3 { align-self: end; margin: 0; font-size: 1.15rem; }
+    .team-mail { align-self: start; align-items: flex-start; justify-content: flex-start; font-size: 0.78rem; overflow-wrap: anywhere; }
+}
