@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coinfident - Main</title>
+    <link rel="stylesheet" type="text/css" href="css-stylesheets/tester.css">
+</head>
+<body>
+    <header id="main-header">
+        <div class="container">
+            <a href="1main.html" class="brand">
+                <!-- If you add a logo image later, put <img> right here -->
+                <span class="logo-text">COINFIDENT</span>
+            </a>
+
+            <nav id="navbar">
+                <ul>
+                <li><a href="1main.html">HOME</a></li>
+                <li><a href="calculator.html" class="active">MAIN</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="calc-main">
+        <h1>Budget Guide and Calculator</h1>
+        <p class="calc-intro">
+            Learn a simple way to plan your monthly allowance, then check your own budget and find articles that match your result.
+        </p>
+
+        <section id="rule" class="calc-section split">
+            <img src="images/budget-rule.svg" alt="Donut chart of the 50/30/20 rule: 50% needs, 30% wants, 20% savings">
+            <div>
+                <h2>The 50/30/20 rule</h2>
+                <p>The 50/30/20 rule splits your money into three parts. It gives you a target to aim for without tracking every peso.</p>
+                <ul>
+                    <li><strong>Needs (50%):</strong> boarding or rent, food, transportation, tuition, school supplies, and load or internet.</li>
+                    <li><strong>Wants (30%):</strong> milk tea, hangouts, subscriptions, games, and shopping.</li>
+                    <li><strong>Savings (20%):</strong> an emergency fund and money for goals such as a laptop or thesis.</li>
+                </ul>
+            </div>
+        </section>
+
+        <h2 id="calculator" class="calc-title">Check your budget</h2>
+        <p class="calc-intro">Enter your monthly allowance and where it goes, then press Check my budget.</p>
+
+        <form id="calc-form" novalidate>
+            <div class="calc-grid">
+                <fieldset class="calc-card allowance">
+                    <legend class="calc-head">Monthly allowance</legend>
+                    <div class="calc-allow-body">
+                        <div class="calc-allow-input">
+                            <p class="hint">Include everything you receive in a month: allowance from family, scholarship, stipend, or part-time pay.</p>
+                            <label class="calc-field"><span>Total monthly allowance</span>
+                                <div class="calc-money"><input type="number" id="allowance" min="0" step="any" inputmode="decimal" placeholder="0"></div>
+                            </label>
+                        </div>
+                        <div class="calc-side">
+                            <div class="calc-actions">
+                                <button type="submit" class="primary">Check my budget</button>
+                                <button type="reset" id="calc-reset">Clear</button>
+                            </div>
+                            <div class="calc-balance" aria-live="polite">
+                                <span>Planned: <strong id="bal-planned">&#8369;0.00</strong></span>
+                                <span>Allowance left: <strong id="bal-left">&#8369;0.00</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="calc-error" class="calc-error" role="alert"></p>
+                </fieldset>
+
+                <div id="calc-summary" class="calc-summary" aria-live="polite" hidden>
+                <div id="calc-verdict" class="calc-verdict">
+                    <span class="calc-badge" id="verdict-badge"></span>
+                    <div><h2 id="verdict-title"></h2><p id="verdict-text"></p></div>
+                </div>
+
+                <div class="calc-bars">
+                    <h3>Your budget vs. the 50/30/20 target</h3>
+                    <div class="calc-bar-label">Your budget</div>
+                    <div class="calc-bar" id="bar-yours"></div>
+                    <div class="calc-bar-label">Target</div>
+                    <div class="calc-bar">
+                        <span class="b-needs w50">Needs 50%</span>
+                        <span class="b-wants w30">Wants 30%</span>
+                        <span class="b-save w20">Savings 20%</span>
+                    </div>
+                </div>
+                </div>
+
+                <fieldset class="calc-card needs">
+                    <legend class="calc-head"><span>Needs</span><span class="calc-sub" id="sub-needs"></span></legend>
+                    <p class="hint">Things you can't skip.</p>
+                    <label class="calc-field"><span>Boarding, rent, utilities</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Groceries and basic meals</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Transportation</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Tuition, school supplies, printing</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Load and internet</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Other required costs</span><div class="calc-money"><input type="number" class="need" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                </fieldset>
+
+                <fieldset class="calc-card wants">
+                    <legend class="calc-head"><span>Wants</span><span class="calc-sub" id="sub-wants"></span></legend>
+                    <p class="hint">Things that are nice to have.</p>
+                    <label class="calc-field"><span>Eating out, milk tea, coffee</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Entertainment and hangouts</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Subscriptions and games</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Shopping (clothes, gadgets, online orders)</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Other wants</span><div class="calc-money"><input type="number" class="want" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                </fieldset>
+
+                <fieldset class="calc-card savings">
+                    <legend class="calc-head"><span>Savings</span><span class="calc-sub" id="sub-savings"></span></legend>
+                    <p class="hint">Money you set aside each month.</p>
+                    <label class="calc-field"><span>Savings and emergency fund</span><div class="calc-money"><input type="number" class="save" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                    <label class="calc-field"><span>Goals (laptop, thesis, trip)</span><div class="calc-money"><input type="number" class="save" min="0" step="any" inputmode="decimal" placeholder="0"></div></label>
+                </fieldset>
+            </div>
+
+        </form>
+
+        <section id="calc-results" hidden>
+            <div class="calc-table-wrap">
+                <table class="calc-table">
+                    <thead><tr><th>Category</th><th>Your amount</th><th>Share of allowance</th><th>Target</th><th>Rating</th></tr></thead>
+                    <tbody id="calc-table-body"></tbody>
+                </table>
+            </div>
+
+            <div class="calc-resources">
+                <h2 id="res-title"></h2>
+                <ul id="res-list"></ul>
+            </div>
+        </section>
+
+        <section id="ratings" class="calc-section">
+            <h2>How your budget is rated</h2>
+            <p>Each category is rated on its own. Your overall rating is the lowest of the three, and planning to spend more than your allowance is always Poor.</p>
+            <ul>
+                <li><strong>Good:</strong> needs at 50% or less, wants at 30% or less, and savings at 20% or more.</li>
+                <li><strong>Medium:</strong> needs up to 60%, wants up to 40%, and savings at 10% or more.</li>
+                <li><strong>Poor:</strong> anything beyond those limits.</li>
+            </ul>
+        </section>
+
+        <section id="resources" class="calc-section calc-links">
+            <h2>Helpful resources</h2>
+            <p>These links open on other websites. Start with the group that matches your rating.</p>
+
+            <h3>If your rating is Poor: get back on track</h3>
+            <ul id="res-poor">
+                <li><a href="https://bukas.ph/blog/tipid-tips-for-filipino-students/" target="_blank" rel="noopener noreferrer">8 Tipid Tips for Filipino Students (Bukas)</a></li>
+                <li><a href="https://www.mmdc.mcl.edu.ph/news-and-events/lifestyle-career-tips/how-to-budget-according-to-a-working-student/" target="_blank" rel="noopener noreferrer">How to Budget According to a Working Student (MMDC)</a></li>
+                <li><a href="https://www.bsp.gov.ph/SitePages/MediaAndResearch/FinEd_LearnersAndEducators.aspx" target="_blank" rel="noopener noreferrer">Financial education videos on saving, budgeting, debt, and scams (BSP)</a></li>
+            </ul>
+
+            <h3>If your rating is Medium: keep improving</h3>
+            <ul id="res-medium">
+                <li><a href="https://www.maya.ph/stories/5-smart-saving-tips-every-filipino-student-should-know" target="_blank" rel="noopener noreferrer">5 Smart Saving Tips Every Filipino Student Should Know (Maya)</a></li>
+                <li><a href="https://www.citizensbank.com/learning/how-to-build-emergency-fund-college.aspx" target="_blank" rel="noopener noreferrer">How to Build an Emergency Fund for College Students (Citizens)</a></li>
+                <li><a href="https://bukas.ph/5-good-finlit-habits-for-students" target="_blank" rel="noopener noreferrer">5 Good Financial Literacy Habits for Students (Bukas)</a></li>
+            </ul>
+
+            <h3>If your rating is Good: sustain and grow</h3>
+            <ul id="res-good">
+                <li><a href="https://www.britannica.com/money/what-is-the-50-30-20-rule" target="_blank" rel="noopener noreferrer">Using the 50-30-20 Rule to Power Your Household Budget (Britannica)</a></li>
+                <li><a href="https://www.maya.ph/stories/5-ways-starting-to-save-as-a-student-sets-you-up-for-future-success" target="_blank" rel="noopener noreferrer">5 Ways Starting to Save as a Student Sets You Up for Future Success (Maya)</a></li>
+                <li><a href="https://www.bsp.gov.ph/SitePages/MediaAndResearch/FinEd_LearnersAndEducators.aspx" target="_blank" rel="noopener noreferrer">More financial education videos (BSP)</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer id="main-footer">
+        <p>Batangas State University - The NEU Alangilan</p>
+    </footer>
+    <script>
+        /* Rating rules. Overall rating = the weakest of the three categories.
+           Good:   needs <= 50%, wants <= 30%, savings >= 20%
+           Medium: needs <= 60%, wants <= 40%, savings >= 10%
+           Poor:   anything worse */
+        var RULES = {
+            needs:   { target: '50% or less', good: 50, medium: 60, higherIsBetter: false },
+            wants:   { target: '30% or less', good: 30, medium: 40, higherIsBetter: false },
+            savings: { target: '20% or more', good: 20, medium: 10, higherIsBetter: true }
+        };
+
+        var RES_TITLE = { poor: 'Get back on track', medium: 'Keep improving', good: 'Sustain and grow' };
+
+        var LABEL = { good: 'Good', medium: 'Medium', poor: 'Poor' };
+        var VERDICT_TEXT = {
+            good: 'Your budget is in line with the 50/30/20 rule. Keep it up.',
+            medium: 'You are close, but at least one category is off target. Small changes can bring it in line.',
+            poor: 'At least one category is well off target. Start with the biggest gap below.'
+        };
+
+        function sumOf(sel) {
+            var t = 0;
+            document.querySelectorAll(sel).forEach(function (el) {
+                var v = parseFloat(el.value);
+                if (!isNaN(v) && v > 0) t += v;
+            });
+            return t;
+        }
+        function peso(n) {
+            return '\u20B1' + n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        function rate(rule, pct) {
+            if (rule.higherIsBetter) return pct >= rule.good ? 'good' : pct >= rule.medium ? 'medium' : 'poor';
+            return pct <= rule.good ? 'good' : pct <= rule.medium ? 'medium' : 'poor';
+        }
+
+        /* Live subtotals and balance */
+        function updateLive() {
+            var a = parseFloat(document.getElementById('allowance').value) || 0;
+            var n = sumOf('.need'), w = sumOf('.want'), s = sumOf('.save');
+            document.getElementById('sub-needs').textContent = n ? peso(n) : '';
+            document.getElementById('sub-wants').textContent = w ? peso(w) : '';
+            document.getElementById('sub-savings').textContent = s ? peso(s) : '';
+            var planned = n + w + s, left = a - planned;
+            document.getElementById('bal-planned').textContent = peso(planned);
+            var leftEl = document.getElementById('bal-left');
+            leftEl.textContent = peso(left);
+            leftEl.className = left < 0 ? 'over' : '';
+        }
+        document.getElementById('calc-form').addEventListener('input', updateLive);
+
+        document.getElementById('calc-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var errorEl = document.getElementById('calc-error');
+            var results = document.getElementById('calc-results');
+            var summary = document.getElementById('calc-summary');
+            function setShown(show) { results.hidden = !show; summary.hidden = !show; }
+            errorEl.textContent = '';
+
+            var allowance = parseFloat(document.getElementById('allowance').value);
+            if (isNaN(allowance) || allowance <= 0) {
+                errorEl.textContent = 'Enter your monthly allowance to continue.';
+                setShown(false);
+                document.getElementById('allowance').focus();
+                return;
+            }
+            var amounts = { needs: sumOf('.need'), wants: sumOf('.want'), savings: sumOf('.save') };
+            var spent = amounts.needs + amounts.wants + amounts.savings;
+            if (spent === 0) {
+                errorEl.textContent = 'Enter at least one expense or savings amount.';
+                setShown(false);
+                return;
+            }
+
+            var names = { needs: 'Needs', wants: 'Wants', savings: 'Savings' };
+            var cls = { needs: 'b-needs', wants: 'b-wants', savings: 'b-save' };
+            var order = { good: 0, medium: 1, poor: 2 };
+            var overall = 'good', rows = '', bar = '';
+
+            ['needs', 'wants', 'savings'].forEach(function (key) {
+                var pct = amounts[key] / allowance * 100;
+                var r = rate(RULES[key], pct);
+                if (order[r] > order[overall]) overall = r;
+                rows += '<tr><td>' + names[key] + '</td><td>' + peso(amounts[key]) + '</td><td>' + pct.toFixed(1) +
+                        '%</td><td>' + RULES[key].target + '</td><td><span class="calc-tag ' + r + '">' + LABEL[r] + '</span></td></tr>';
+            });
+
+            /* Bar: scale to the larger of allowance or total planned so it never overflows */
+            var base = Math.max(allowance, spent);
+            ['needs', 'wants', 'savings'].forEach(function (key) {
+                var w = amounts[key] / base * 100;
+                if (w > 0) bar += '<span class="' + cls[key] + '" style="width:' + w + '%">' + (w >= 9 ? (amounts[key] / allowance * 100).toFixed(0) + '%' : '') + '</span>';
+            });
+            var diff = allowance - spent, note = '';
+            if (diff > 0) {
+                bar += '<span class="b-left" style="width:' + (diff / base * 100) + '%">' + (diff / base * 100 >= 9 ? 'Unassigned' : '') + '</span>';
+                note = ' ' + peso(diff) + ' of your allowance is not assigned to any category yet.';
+            } else if (diff < 0) {
+                overall = 'poor';
+                note = ' You planned to spend ' + peso(-diff) + ' more than your allowance.';
+            }
+
+            document.getElementById('bar-yours').innerHTML = bar;
+            document.getElementById('calc-table-body').innerHTML = rows;
+            document.getElementById('calc-verdict').className = 'calc-verdict ' + overall;
+            document.getElementById('verdict-badge').textContent = LABEL[overall];
+            document.getElementById('verdict-title').textContent = 'Overall rating: ' + LABEL[overall];
+            document.getElementById('verdict-text').textContent = VERDICT_TEXT[overall] + note;
+
+            var list = document.getElementById('res-list');
+            document.getElementById('res-title').textContent = RES_TITLE[overall];
+            list.innerHTML = '';
+            /* Reuse the links listed in the Resources section so they stay in one place */
+            document.querySelectorAll('#res-' + overall + ' a').forEach(function (link) {
+                var li = document.createElement('li');
+                li.appendChild(link.cloneNode(true));
+                list.appendChild(li);
+            });
+
+            setShown(true);
+            summary.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        document.getElementById('calc-reset').addEventListener('click', function () {
+            document.getElementById('calc-results').hidden = true;
+            document.getElementById('calc-summary').hidden = true;
+            document.getElementById('calc-error').textContent = '';
+            setTimeout(updateLive, 0);
+        });
+    </script>
+</body>
+</html>
